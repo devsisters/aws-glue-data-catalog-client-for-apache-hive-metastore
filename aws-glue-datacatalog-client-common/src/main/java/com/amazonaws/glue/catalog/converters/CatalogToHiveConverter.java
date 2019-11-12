@@ -40,6 +40,7 @@ import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_TABLE_N
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_DB_NAME;
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_HANDLER_CLASS;
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_ORIGIN_TABLE_NAME;
+import static com.amazonaws.glue.catalog.converters.ConverterUtils.convertLocationScheme;
 
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
@@ -171,7 +172,7 @@ public class CatalogToHiveConverter {
   public static StorageDescriptor convertStorageDescriptor(com.amazonaws.services.glue.model.StorageDescriptor catalogSd) {
     StorageDescriptor hiveSd = new StorageDescriptor();
     hiveSd.setCols(convertFieldSchemaList(catalogSd.getColumns()));
-    hiveSd.setLocation(catalogSd.getLocation());
+    hiveSd.setLocation(convertLocationScheme(catalogSd.getLocation(), "s3a"));
     hiveSd.setInputFormat(catalogSd.getInputFormat());
     hiveSd.setOutputFormat(catalogSd.getOutputFormat());
     hiveSd.setCompressed(catalogSd.getCompressed());

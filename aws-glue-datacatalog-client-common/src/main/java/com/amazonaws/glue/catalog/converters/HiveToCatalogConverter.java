@@ -23,6 +23,7 @@ import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_DEFERRE
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_HANDLER_CLASS;
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_ORIGIN_TABLE_NAME;
 import static com.amazonaws.glue.catalog.converters.ConverterUtils.INDEX_TABLE_NAME;
+import static com.amazonaws.glue.catalog.converters.ConverterUtils.convertLocationScheme;
 
 public class HiveToCatalogConverter {
 
@@ -63,7 +64,7 @@ public class HiveToCatalogConverter {
     catalogSd.setBucketColumns(hiveSd.getBucketCols());
     catalogSd.setColumns(convertFieldSchemaList(hiveSd.getCols()));
     catalogSd.setInputFormat(hiveSd.getInputFormat());
-    catalogSd.setLocation(hiveSd.getLocation());
+    catalogSd.setLocation(convertLocationScheme(hiveSd.getLocation(), "s3"));
     catalogSd.setOutputFormat(hiveSd.getOutputFormat());
     catalogSd.setSerdeInfo(convertSerDeInfo(hiveSd.getSerdeInfo()));
     catalogSd.setSkewedInfo(convertSkewedInfo(hiveSd.getSkewedInfo()));
