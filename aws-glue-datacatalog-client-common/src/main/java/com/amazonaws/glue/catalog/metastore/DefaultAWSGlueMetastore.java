@@ -1,6 +1,7 @@
 package com.amazonaws.glue.catalog.metastore;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.glue.catalog.converters.ConverterUtils;
 import com.amazonaws.glue.catalog.util.MetastoreClientUtils;
 import com.amazonaws.services.glue.AWSGlue;
 import com.amazonaws.services.glue.model.BatchCreatePartitionRequest;
@@ -45,6 +46,7 @@ import com.amazonaws.services.glue.model.UserDefinedFunctionInput;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.metastore.api.MetaException;
 import org.apache.hadoop.util.ReflectionUtils;
 import org.apache.thrift.TException;
 
@@ -309,12 +311,19 @@ public class DefaultAWSGlueMetastore implements AWSGlueMetastore {
     private List<Partition> getCatalogPartitions(String databaseName, String tableName, String expression,
                                                  long max, Segment segment) {
         List<Partition> partitions = Lists.newArrayList();
+
+        // (kimtkyeom) TODO: 여기서 `getTable` 호출 하는 것이 맞나..?
+        Table table = getTable(databaseName, tableName);
+        String convertedExpr = ConverterUtils
+                .PartitionFilterConverter
+                .convertHiveToCatalog(table, databaseName, expression);
+
         String nextToken = null;
         do {
             GetPartitionsRequest request = new GetPartitionsRequest()
                     .withDatabaseName(databaseName)
                     .withTableName(tableName)
-                    .withExpression(expression)
+                    .withExpression(convertedExpr)
                     .withNextToken(nextToken)
                     .withCatalogId(catalogId)
                     .withSegment(segment);
