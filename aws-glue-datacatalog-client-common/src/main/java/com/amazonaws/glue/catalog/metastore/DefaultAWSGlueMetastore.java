@@ -316,7 +316,7 @@ public class DefaultAWSGlueMetastore implements AWSGlueMetastore {
         Table table = getTable(databaseName, tableName);
         String convertedExpr = ConverterUtils
                 .PartitionFilterConverter
-                .convertHiveToCatalog(table, databaseName, expression);
+                .convertHiveToCatalog(expression);
 
         String nextToken = null;
         do {
