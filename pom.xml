@@ -18,7 +18,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hive2.version>2.3.7</hive2.version>
+    <hive2.version>2.3.9</hive2.version>
     <spark-hive.version>1.2.1</spark-hive.version>
     <aws.sdk.version>1.11.1014</aws.sdk.version>
     <junit.version>4.11</junit.version>
