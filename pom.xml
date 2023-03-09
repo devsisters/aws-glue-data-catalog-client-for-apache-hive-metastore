@@ -33,6 +33,14 @@
     <checkstyle.config.location>${basedir}/dev-support/check_style.xml</checkstyle.config.location>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>conjars-repo</id>
+      <name>conjars-repo</name>
+      <url>https://conjars.org/repo</url>
+    </repository>
+  </repositories>
+
   <build>
     <pluginManagement>
       <plugins>
