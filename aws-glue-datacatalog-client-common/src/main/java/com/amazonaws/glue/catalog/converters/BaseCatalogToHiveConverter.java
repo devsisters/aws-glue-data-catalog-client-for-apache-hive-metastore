@@ -183,7 +183,7 @@ public class BaseCatalogToHiveConverter implements CatalogToHiveConverter {
   public StorageDescriptor convertStorageDescriptor(com.amazonaws.services.glue.model.StorageDescriptor catalogSd) {
     StorageDescriptor hiveSd = new StorageDescriptor();
     hiveSd.setCols(convertFieldSchemaList(catalogSd.getColumns()));
-    hiveSd.setLocation(catalogSd.getLocation());
+    hiveSd.setLocation(ConverterUtils.convertLocationScheme(catalogSd.getLocation(), "s3a"));
     hiveSd.setInputFormat(catalogSd.getInputFormat());
     hiveSd.setOutputFormat(catalogSd.getOutputFormat());
     hiveSd.setCompressed(catalogSd.getCompressed());

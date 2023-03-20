@@ -79,7 +79,7 @@ public class HiveToCatalogConverter {
     catalogSd.setBucketColumns(hiveSd.getBucketCols());
     catalogSd.setColumns(convertFieldSchemaList(hiveSd.getCols()));
     catalogSd.setInputFormat(hiveSd.getInputFormat());
-    catalogSd.setLocation(hiveSd.getLocation());
+    catalogSd.setLocation(ConverterUtils.convertLocationScheme(hiveSd.getLocation(), "s3"));
     catalogSd.setOutputFormat(hiveSd.getOutputFormat());
     catalogSd.setSerdeInfo(convertSerDeInfo(hiveSd.getSerdeInfo()));
     catalogSd.setSkewedInfo(convertSkewedInfo(hiveSd.getSkewedInfo()));
